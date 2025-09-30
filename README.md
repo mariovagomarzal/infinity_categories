@@ -18,6 +18,33 @@ the proof of their equivalence in Lean 4.
 
 ## Development
 
+In this section, we document how to work with the repository. The development
+environment is mainly managed with [Nix][nix] and *[devenv][devenv]*. However,
+it is also documented how to work without the latter.
+
+### Nix setup
+
+To set up the development environment with Nix, you need to have Nix and
+*devenv* installed. Once you have them, you can enter the development
+environment by running the following command in the root of the repository:
+
+```bash
+devenv shell
+```
+
+> [!TIP]
+> If using [direnv][direnv], you can automatically load the development
+> environment whenever you enter the repository directory by running
+> `direnv allow` once in the root of the repository.
+
+Usage is work in progress.
+
+### Manual setup
+
+Work in progress.
+
+## Conventions
+
 Work in progress.
 
 ## Authors
@@ -33,5 +60,8 @@ This project is licensed under the Apache License 2.0. See the
 [LICENSE](LICENSE) file for details.
 
 <!-- External links -->
+[nix]: https://nixos.org/
+[devenv]: https://devenv.sh/
+[direnv]: https://direnv.net/
 [mario]: https://github.com/mariovagomarzal
 [enric]: https://github.com/encosllo
