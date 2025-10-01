@@ -12,7 +12,7 @@ also commonly used.
 The aim of this project is to provide a formalization of the latter notions and
 the proof of their equivalence in Lean 4.
 
-> [!INFO]
+> [!NOTE]
 > For the moment, this is an active research project for a Mathematics degree
 > final project. The project is in early stages and the following documentation
 > is intended for self-reference only.
