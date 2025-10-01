@@ -14,7 +14,8 @@ the proof of their equivalence in Lean 4.
 
 > [!INFO]
 > For the moment, this is an active research project for a Mathematics degree
-> final project. The project is in early stages.
+> final project. The project is in early stages and the following documentation
+> is intended for self-reference only.
 
 ## Development
 
@@ -53,7 +54,32 @@ Work in progress.
 
 ## Conventions
 
-Work in progress.
+In this section, we document the workflow and conventions used in this
+repository.
+
+### Commit messages
+
+This project follows the [Conventional Commits][conventional-commits]
+specification for commit messages. The commit message format is as follows:
+
+```text
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+> [!TIP]
+> If working with the development environment defined with _devenv_, a git hook
+> is automatically installed to check the commit messages before committing.
+
+Where `<type>` is one of the following: `feat`, `fix`, `docs`, `style`,
+`refactor`, `test`, `chore`, `build`, `ci`, `perf`, `revert`.
+
+### Branching
+
+There are no strict rules for branching in this repository.
 
 ## Authors
 
@@ -71,5 +97,6 @@ This project is licensed under the Apache License 2.0. See the
 [nix]: https://nixos.org/
 [devenv]: https://devenv.sh/
 [direnv]: https://direnv.net/
+[conventional-commits]: https://www.conventionalcommits.org/en/v1.0.0/
 [mario]: https://github.com/mariovagomarzal
 [enric]: https://github.com/encosllo
