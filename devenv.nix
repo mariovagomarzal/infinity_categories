@@ -1,5 +1,8 @@
 {pkgs, ...}: {
-  env.GREET = "Lean 4 Development Environment";
+  env = {
+    GREET = "Lean 4 Development Environment";
+    PROJECT_NAME = "InfinityCategories";
+  };
 
   packages = with pkgs; [
     git
@@ -41,4 +44,27 @@
   enterShell = ''
     echo $GREET
   '';
+
+  scripts = {
+    "build" = {
+      exec = ''
+        lake build $PROJECT_NAME $@
+      '';
+      description = "Build the Lean project using Lake";
+    };
+  };
+
+  tasks = {
+    "lean:cache" = {
+      exec = "lake exe cache get";
+      after = ["devenv:enterShell"];
+      cwd = ".";
+      description = ''
+        Cache upstream Lean dependencies to save time compiling Mathlib and
+        other dependencies
+      '';
+    };
+  };
+
+  processes = {};
 }

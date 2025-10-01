@@ -19,14 +19,14 @@ the proof of their equivalence in Lean 4.
 ## Development
 
 In this section, we document how to work with the repository. The development
-environment is mainly managed with [Nix][nix] and *[devenv][devenv]*. However,
+environment is mainly managed with [Nix][nix] and _[devenv][devenv]_. However,
 it is also documented how to work without the latter.
 
 ### Nix setup
 
 To set up the development environment with Nix, you need to have Nix and
-*devenv* installed. Once you have them, you can enter the development
-environment by running the following command in the root of the repository:
+_devenv_ installed. Once you have them, you can enter the development shell
+by running the following command in the root of the repository:
 
 ```bash
 devenv shell
@@ -37,7 +37,15 @@ devenv shell
 > environment whenever you enter the repository directory by running
 > `direnv allow` once in the root of the repository.
 
-Usage is work in progress.
+Once inside the development shell, all the necessary tools and dependencies
+will be available. Run the following command to see available packages, scripts,
+tasks and processes:
+
+```bash
+devenv info
+```
+
+Check out the `devenv.nix` file for more details on the development environment.
 
 ### Manual setup
 
@@ -49,8 +57,8 @@ Work in progress.
 
 ## Authors
 
-- *(Author)* [Mario Vago Marzal][mario]
-- *(Supervisor)* [Enric Cosme Llópez][enric]
+- _(Author)_ [Mario Vago Marzal][mario]
+- _(Supervisor)_ [Enric Cosme Llópez][enric]
 
 ## License
 
