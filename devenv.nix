@@ -26,6 +26,18 @@
     };
   };
 
+  files = {
+    ".gitlint".ini = {
+      general = {
+        contrib = "contrib-title-conventional-commits";
+        ignore = "body-is-missing";
+      };
+
+      title-max-length.line-length = 120;
+      body-max-line-length.line-length = 120;
+    };
+  };
+
   enterShell = ''
     echo $GREET
   '';
