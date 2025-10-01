@@ -1,7 +1,12 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   env = {
     GREET = "Lean 4 Development Environment";
     PROJECT_NAME = "InfinityCategories";
+    DOCS_SERVER_PORT = "8000";
   };
 
   packages = with pkgs; [
@@ -9,6 +14,7 @@
   ];
 
   languages.lean4.enable = true;
+  languages.python.enable = true;
 
   git-hooks = {
     hooks = {
@@ -52,6 +58,33 @@
       '';
       description = "Build the Lean project using Lake";
     };
+
+    "update" = {
+      exec = ''
+        lake update $1
+        cd docbuild || exit 1
+        lake update $PROJECT_NAME
+        cd ..
+      '';
+      description = "Update dependencies for the Lean project";
+    };
+
+    "docs" = {
+      exec = ''
+        cd docbuild || exit 1
+        DOCGEN_SRC="github" lake build $PROJECT_NAME:docs $@
+        cd ..
+      '';
+      description = "Build the documentation for the Lean project";
+    };
+
+    "update-docs" = {
+      exec = ''
+        cd docbuild || exit 1
+        MATHLIB_NO_CACHE_ON_UPDATE=1 lake update doc-gen4
+        cd ..
+      '';
+    };
   };
 
   tasks = {
@@ -66,5 +99,12 @@
     };
   };
 
-  processes = {};
+  processes = {
+    "docs-server" = {
+      exec = ''
+        python -m http.server $DOCS_SERVER_PORT
+      '';
+      cwd = "docbuild/.lake/build/doc";
+    };
+  };
 }
