@@ -70,12 +70,12 @@ specification for commit messages. The commit message format is as follows:
 [optional footer(s)]
 ```
 
+Where `<type>` is one of the following: `feat`, `fix`, `docs`, `style`,
+`refactor`, `test`, `chore`, `build`, `ci`, `perf`, `revert`.
+
 > [!TIP]
 > If working with the development environment defined with _devenv_, a git hook
 > is automatically installed to check the commit messages before committing.
-
-Where `<type>` is one of the following: `feat`, `fix`, `docs`, `style`,
-`refactor`, `test`, `chore`, `build`, `ci`, `perf`, `revert`.
 
 ### Branching
 
