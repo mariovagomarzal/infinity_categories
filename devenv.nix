@@ -5,7 +5,6 @@
 }: {
   env = {
     GREET = "Lean 4 Development Environment";
-    PROJECT_NAME = "InfinityCategories";
     DOCS_SERVER_PORT = "8000";
   };
 
@@ -54,7 +53,7 @@
   scripts = {
     "build" = {
       exec = ''
-        lake build $PROJECT_NAME $@
+        lake build InfinityCategories $@
       '';
       description = "Build the Lean project using Lake";
     };
@@ -63,7 +62,7 @@
       exec = ''
         lake update $1
         cd docbuild || exit 1
-        lake update $PROJECT_NAME
+        lake update InfinityCategories
         cd ..
       '';
       description = "Update dependencies for the Lean project";
@@ -72,7 +71,7 @@
     "docs" = {
       exec = ''
         cd docbuild || exit 1
-        DOCGEN_SRC="github" lake build $PROJECT_NAME:docs $@
+        DOCGEN_SRC="github" lake build InfinityCategories:docs $@
         cd ..
       '';
       description = "Build the documentation for the Lean project";
