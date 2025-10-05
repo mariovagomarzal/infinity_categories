@@ -50,7 +50,66 @@ Check out the `devenv.nix` file for more details on the development environment.
 
 ### Manual setup
 
-Work in progress.
+This section provides manual setup instructions for working with the repository
+without _devenv_. It documents the same dependencies and tasks configured in
+`devenv.nix`.
+
+The following tools are required to work with the repository:
+
+- **Git**: The version control system.
+- **Lean 4**: The Lean theorem prover and its toolchain (including Lake, the
+  Lean build tool). If installing Lean manually, it is recommended to use
+  [elan][elan] to manage Lean installations.
+- **Python**: For running the documentation server.
+
+After installing the Lean dependencies, cache the upstream Lean dependencies to
+save time compiling Mathlib and other dependencies:
+
+```bash
+lake exe cache get
+```
+
+#### Common tasks
+
+- For building the project, run:
+
+  ```bash
+  lake build InfinityCategories
+  ```
+  
+- When updating Lean dependencies, it is also important to update the
+  dependencie that points to the current project in the `docbuild` directory. To
+  do so, run:
+  
+  ```bash
+  lake update # or `lake update <dependency>` for a specific dependency
+  
+  # Update the dependency pointing to this project
+  cd docbuild
+  lake update InfinityCategories
+  ```
+  
+- To build the documentation, run:
+
+  ```bash
+  cd docbuild
+  DOCGEN_SRC="github" lake build InfinityCategories:docs
+  ```
+  
+- For updating the documentation generation tool you have to update the
+  `doc-gen4` dependency in the `docbuild` directory. To do so, run:
+  
+  ```bash
+  cd docbuild
+  MATHLIB_NO_CACHE_ON_UPDATE=1 lake update doc-gen4
+  ```
+  
+- For serving the documentation locally, run:
+
+  ```bash
+  cd docbuild/.lake/build/doc # make sure to build the docs first
+  python -m http.server 8000 # or any other port
+  ```
 
 ## Conventions
 
@@ -97,6 +156,7 @@ This project is licensed under the Apache License 2.0. See the
 [nix]: https://nixos.org/
 [devenv]: https://devenv.sh/
 [direnv]: https://direnv.net/
+[elan]: https://github.com/leanprover/elan
 [conventional-commits]: https://www.conventionalcommits.org/en/v1.0.0/
 [mario]: https://github.com/mariovagomarzal
 [enric]: https://github.com/encosllo
