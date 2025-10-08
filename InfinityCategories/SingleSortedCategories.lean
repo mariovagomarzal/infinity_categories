@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2025 Mario Vago Marzal. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: Mario Vago Marzal
+Authors: Enric Cosme Llópez, Raul Ruiz Mora, Mario Vago Marzal
 -/
 import Mathlib.Data.Pfun
 
@@ -15,8 +15,6 @@ single-sorted $\omega$-category and its corresponding functor notions.
 
 Introduces notation in the `SingleSortedCategories` scope:
 * `g ♯. f` for the partial composition of `f` and `g` (type as `\#.`),
-* `g sc_is_tg f` for the condition that the sorce of `g` is equal to the target
-  of `f`,
 * `g ♯ f ← composable_gf` for the composition of `f` and `g`, provided a proof
   that `g` and `f` are composable, `composable_gf`, (type as `\#` and `\<-`).
 -/
@@ -55,14 +53,10 @@ def sc_is_tg {Obj : Type*} [SingleSortedCategoryStruct Obj]
     (g f : Obj) : Prop :=
   sc g = tg f
 
-/-- Notation for the condition of equality between the source and the target of
-two given morphisms -/
-scoped infix:80 " sc_is_tg " => sc_is_tg
-
 /-- A composition operator that, given two morphisms and a proof that the source
 of one is the target of the other, returns the composition of the morphisms. -/
 def comp {Obj : Type*} [SingleSortedCategoryStruct Obj]
-    (g f : Obj) (composable_gf : g sc_is_tg f) : Obj :=
+    (g f : Obj) (composable_gf : sc_is_tg g f) : Obj :=
   (g ♯. f).get (SingleSortedCategoryStruct.pcomp_dom.mpr composable_gf)
 
 /-- Notation for the composition of morphisms given a proof that the source of
@@ -84,11 +78,11 @@ class SingleSortedCategory (Obj : Type*) extends
   idemp_tg_tg : ∀ {f : Obj}, tg (tg f) = tg f
   /-- The source of a composition is the source of the first morphism. -/
   sc_comp_is_sc :
-    ∀ {f g : Obj} (composable_gf : g sc_is_tg f),
+    ∀ {f g : Obj} (composable_gf : sc_is_tg g f),
     sc (g ♯ f ← composable_gf) = sc f
   /-- The target of a composition is the target of the second morphism. -/
   tg_comp_is_tg :
-    ∀ {f g : Obj} (composable_gf : g sc_is_tg f),
+    ∀ {f g : Obj} (composable_gf : sc_is_tg g f),
     tg (g ♯ f ← composable_gf) = tg g
   /-- Composition with the source on the right is the morphism itself. -/
   comp_sc_id :
@@ -101,12 +95,12 @@ class SingleSortedCategory (Obj : Type*) extends
   /-- Composition is associative. -/
   assoc :
     ∀ {f g h : Obj}
-    (composable_gf : g sc_is_tg f) (composable_hg : h sc_is_tg g),
+    (composable_gf : sc_is_tg g f) (composable_hg : sc_is_tg h g),
     -- Proof that `h` and `g ♯ f` are composable.
-    let composable_h_gf : h sc_is_tg (g ♯ f ← composable_gf) :=
+    let composable_h_gf : sc_is_tg h (g ♯ f ← composable_gf) :=
       composable_hg.trans (tg_comp_is_tg composable_gf).symm
     -- Proof that `h ♯ g` and `f` are composable.
-    let composable_hg_f : (h ♯ g ← composable_hg) sc_is_tg f :=
+    let composable_hg_f : sc_is_tg (h ♯ g ← composable_hg) f :=
       (sc_comp_is_sc composable_hg).trans composable_gf
     (h ♯ (g ♯ f ← composable_gf) ← composable_h_gf) =
     ((h ♯ g ← composable_hg) ♯ f ← composable_hg_f)
@@ -122,8 +116,8 @@ class SingleSortedFunctor (ObjC ObjD : Type*)
   map_tg : ∀ {f : ObjC}, map (tg f) = tg (map f)
   /-- The map preserves compositions. -/
   map_comp :
-    ∀ {f g : ObjC} (composable_gf : g sc_is_tg f),
-    let composable_mg_mf : (map g) sc_is_tg (map f) :=
+    ∀ {f g : ObjC} (composable_gf : sc_is_tg g f),
+    let composable_mg_mf : sc_is_tg (map g) (map f) :=
       ((@map_sc g).symm.trans (congrArg map composable_gf)).trans (@map_tg f)
     map (g ♯ f ← composable_gf) = (map g) ♯ (map f) ← composable_mg_mf
 
