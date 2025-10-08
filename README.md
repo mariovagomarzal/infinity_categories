@@ -142,8 +142,9 @@ There are no strict rules for branching in this repository.
 
 ## Authors
 
-- _(Author)_ [Mario Vago Marzal][mario]
-- _(Supervisor)_ [Enric Cosme Llópez][enric]
+- [Enric Cosme Llópez][enric]
+- [Raul Ruiz Mora][raul]
+- [Mario Vago Marzal][mario]
 
 ## License
 
@@ -158,5 +159,6 @@ This project is licensed under the Apache License 2.0. See the
 [direnv]: https://direnv.net/
 [elan]: https://github.com/leanprover/elan
 [conventional-commits]: https://www.conventionalcommits.org/en/v1.0.0/
-[mario]: https://github.com/mariovagomarzal
 [enric]: https://github.com/encosllo
+[raul]: https://github.com/ruizmoraraul
+[mario]: https://github.com/mariovagomarzal
