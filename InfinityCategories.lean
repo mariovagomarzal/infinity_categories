@@ -1,1 +1,1 @@
-import InfinityCategories.Basic
+import InfinityCategories.SingleSortedCategories
