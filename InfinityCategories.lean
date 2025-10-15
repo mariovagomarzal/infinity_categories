@@ -1,1 +1,2 @@
 import InfinityCategories.SingleSortedCategories
+import InfinityCategories.Data.NatIndex
