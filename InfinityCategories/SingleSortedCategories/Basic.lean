@@ -23,7 +23,7 @@ single-sorted $\omega$-category.
 
 universe u
 
-namespace SingleSortedCategories
+namespace SingleSortedFamilies
 
 class SingleSortedStruct (Obj : Type u)
     (index : Type) [NatIndex index] where
@@ -78,10 +78,6 @@ class SingleSortedCategoryFamily (Obj : Type u)
     (h ♯[i] (g ♯[i] f ← composable_gf) ← composable_h_gf) =
       ((h ♯[i] g ← composable_hg) ♯[i] f ← composable_hg_f)
 
-@[ext]
-class SingleSortedCategory (Obj : Type u)
-    extends SingleSortedCategoryFamily Obj (Fin 1)
-
 class SingleSorted2CategoryFamily (Obj : Type u)
     (index : Type) [NatIndex index]
     extends SingleSortedCategoryFamily Obj index where
@@ -102,6 +98,16 @@ class SingleSorted2CategoryFamily (Obj : Type u)
     tg k (g ♯[(j: index)] f ← composable_j_gf)
     = (tg k g) ♯[(j : index)] (tg k f) ← (by sorry)
   -- TODO: Implement the remaining axiom of single-sorted 2-categories.
+
+end SingleSortedFamilies
+
+namespace SingleSortedCategories
+
+open SingleSortedFamilies
+
+@[ext]
+class SingleSortedCategory (Obj : Type u)
+    extends SingleSortedCategoryFamily Obj (Fin 1)
 
 @[ext]
 class SingleSorted2Category (Obj : Type*)
