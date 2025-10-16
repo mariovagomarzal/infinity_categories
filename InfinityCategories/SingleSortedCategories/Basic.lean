@@ -23,7 +23,7 @@ single-sorted $\omega$-category.
 
 universe u
 
-namespace SingleSortedFamilies
+namespace SingleSortedCategories
 
 class SingleSortedStruct (Obj : Type u)
     (index : Type) [NatIndex index] where
@@ -33,19 +33,14 @@ class SingleSortedStruct (Obj : Type u)
   pcomp_dom : ∀ {i : index} {f g : Obj},
     (pcomp i g f).Dom ↔ sc i g = tg i f
 
-def composable {Obj : Type u} {index : Type}
-    [NatIndex index] [sss : SingleSortedStruct Obj index]
-    (i : index) (g f : Obj) : Prop :=
+scoped notation:100 g " sc_is_tg[" i:100 "] " f:100 =>
   SingleSortedStruct.sc i g = SingleSortedStruct.tg i f
 
-def comp {Obj : Type u} {index : Type}
-    [NatIndex index] [SingleSortedStruct Obj index]
-    (i : index) (g f : Obj) (composable_gf : composable i g f) : Obj :=
-  (SingleSortedStruct.pcomp i g f).get
-    (SingleSortedStruct.pcomp_dom.mpr composable_gf)
+scoped notation:100 g " ♯[" i:100 "] " f:100 =>
+  SingleSortedStruct.pcomp i g f
 
-scoped notation:100 g " ♯[" i:100 "]" f:100 " ← " composable_fg:100 =>
-  comp i g f composable_fg
+scoped notation:80 pcomp " ← " prf:80 =>
+  Part.get pcomp (SingleSortedStruct.pcomp_dom.mpr prf)
 
 class SingleSortedCategoryFamily (Obj : Type u)
     (index : Type) [NatIndex index]
@@ -59,21 +54,21 @@ class SingleSortedCategoryFamily (Obj : Type u)
   idemp_tg_tg : ∀ {i : index} {f : Obj},
     tg i (tg i f) = tg i f
   sc_comp_is_sc : ∀ {i : index} {f g : Obj}
-      (composable_gf : composable i g f),
+      (composable_gf : g sc_is_tg[i] f),
     sc i (g ♯[i] f ← composable_gf) = sc i f
   tg_comp_is_tg : ∀ {i : index} {f g : Obj}
-      (composable_gf : composable i g f),
+      (composable_gf : g sc_is_tg[i] f),
     tg i (g ♯[i] f ← composable_gf) = tg i g
   comp_sc_is_id : ∀ {i : index} {f : Obj},
     f ♯[i] (sc i f) ← idemp_tg_sc.symm = f
   comp_tg_is_id : ∀ {i : index} {f : Obj},
     (tg i f) ♯[i] f ← idemp_sc_tg = f
   assoc : ∀ {i : index} {f g h : Obj}
-      (composable_gf : composable i g f)
-      (composable_hg : composable i h g),
-    let composable_h_gf : composable i h (g ♯[i] f ← composable_gf) :=
+      (composable_gf : g sc_is_tg[i] f)
+      (composable_hg : h sc_is_tg[i] g),
+    let composable_h_gf : h sc_is_tg[i] (g ♯[i] f ← composable_gf) :=
       composable_hg.trans (tg_comp_is_tg composable_gf).symm
-    let composable_hg_f : composable i (h ♯[i] g ← composable_hg) f :=
+    let composable_hg_f : (h ♯[i] g ← composable_hg) sc_is_tg[i] f :=
       (sc_comp_is_sc composable_hg).trans composable_gf
     (h ♯[i] (g ♯[i] f ← composable_gf) ← composable_h_gf) =
       ((h ♯[i] g ← composable_hg) ♯[i] f ← composable_hg_f)
@@ -90,20 +85,14 @@ class SingleSorted2CategoryFamily (Obj : Type u)
     tg j f = tg j (tg k f) ∧
     tg j (tg k f) = tg j (sc k f)
   sc_comp_is_comp_sc : ∀ {k : index} {j : Fin k} {f g : Obj}
-      (composable_j_gf : composable (j : index) g f),
-    sc k (g ♯[(j: index)] f ← composable_j_gf)
+      (composable_j_gf : g sc_is_tg[(j : index)] f),
+    sc k (g ♯[(j : index)] f ← composable_j_gf)
     = (sc k g) ♯[(j : index)] (sc k f) ← (by sorry)
   tg_comp_is_comp_tg : ∀ {k : index} {j : Fin k} {f g : Obj}
-      (composable_j_gf : composable (j : index) g f),
-    tg k (g ♯[(j: index)] f ← composable_j_gf)
+      (composable_j_gf : g sc_is_tg[(j : index)] f),
+    tg k (g ♯[(j : index)] f ← composable_j_gf)
     = (tg k g) ♯[(j : index)] (tg k f) ← (by sorry)
   -- TODO: Implement the remaining axiom of single-sorted 2-categories.
-
-end SingleSortedFamilies
-
-namespace SingleSortedCategories
-
-open SingleSortedFamilies
 
 @[ext]
 class SingleSortedCategory (Obj : Type u)
