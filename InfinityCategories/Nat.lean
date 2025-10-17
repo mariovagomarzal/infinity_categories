@@ -12,11 +12,11 @@ TODO: Document the file.
 namespace SingleSortedCategories
 
 instance : SingleSortedCategory (Nat×Nat) where
-  sc := fun _ (y₁, y₂) ↦ (y₂, y₂)
-  tg := fun _ (x₁, x₂) ↦ (x₁, x₁)
+  sc := fun _ (_, y₂) ↦ (y₂, y₂)
+  tg := fun _ (x₁, _) ↦ (x₁, x₁)
   pcomp := fun _ (y₁, y₂) (x₁, x₂) ↦ ⟨y₂ = x₁, fun _ ↦ (y₁, x₂)⟩
   pcomp_dom := by
-    intro _ (x₁, x₂) (y₁, y₂)
+    intros
     apply Iff.intro
     · intros
       simpa
