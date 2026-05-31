@@ -25,5 +25,10 @@ name = "checkdecls"
 scope = "PatrickMassot"
 rev = "3d425859e73fcfbef85b9638c2a91708ef4a22d4"
 
+[[require]]
+name = "subverso"
+scope = "leanprover"
+rev = "ce893b9042128037e2d3c0158b9567fab9fae268"
+
 [[lean_lib]]
 name = "HigherCategoryTheory"
